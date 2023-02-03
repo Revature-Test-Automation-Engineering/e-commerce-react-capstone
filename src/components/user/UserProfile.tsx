@@ -59,15 +59,38 @@ export default function UserProfile() {
         findAllUserPaymentMethods();
     }, []);
 
+    function onlyLettersAndSpaces(str) {
+        return /^[A-Za-z\s]*$/.test(str);
+    }
+
+    function followPasswordRules(str) {
+        return /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}$/.test(str);
+      }
+      
     async function update(event: { preventDefault: () => void; }) {
 
         event.preventDefault();
 
         setOpen(true);
 
+        function onlyLettersAndSpaces(str) {
+            return /^[A-Za-z\s]*$/.test(str);
+        }
+    
+        function followPasswordRules(str) {
+            return /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}$/.test(str);
+          }
+
+
         if (!formData.firstName && !formData.lastName && !formData.password) {
             setErrorMessage(`Please update a field`)
             return;
+        } else if(!onlyLettersAndSpaces(formData.firstName)){
+            setErrorMessage(`Please enter only characters in First Name field`)
+        } else if(!onlyLettersAndSpaces(formData.lastName)){
+            setErrorMessage(`Please enter only characters in Last Name field`)
+        } else if(!followPasswordRules(formData.password)){
+            setErrorMessage(`Password must contain 8 or more characters with at least one of each: uppercase, lowercase, number, and special character`)
         } else {
             try {
                 await apiUpdateUser(formData.firstName, formData.lastName, formData.password);
@@ -108,8 +131,34 @@ export default function UserProfile() {
 
         event.preventDefault();
 
+        function only16Digits(str) {
+            return /^\d{16}$/.test(str);
+        }
+        function only3Digits(str){
+            return /^\d{3}$/.test(str);
+        }
+        function isExpired(str){
+            var today = new Date();
+            var expDate = new Date(str);
+            
+            return expDate < today;
+
+        }
+
         if (!paymentFormData.ccv || !paymentFormData.expDate || !paymentFormData.cardNumber) {
             setErrorMessage(`Please fill out all fields`)
+            setOpen(true);
+            return;
+        } else if(!only16Digits(paymentFormData.cardNumber)){
+            setErrorMessage(`Card number must be 16 digits only`);
+            setOpen(true);
+            return;
+        } else if(!only3Digits(paymentFormData.ccv)){
+            setErrorMessage(`CCV must be 3 digits only`);
+            setOpen(true);
+            return;
+        } else if(isExpired(paymentFormData.expDate)){
+            setErrorMessage(`Expiry date must be a future date`);
             setOpen(true);
             return;
         } else {
