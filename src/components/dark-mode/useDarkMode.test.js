@@ -1,38 +1,29 @@
+import { Experimental_CssVarsProvider } from '@mui/material';
 import React from 'react';
 import {useState, useContext, useEffect} from 'react';
 import { RefreshContext } from "../../context/refresh.context";
+import { useDarkMode } from './useDarkMode';
 
 //Succesful tests
 
-describe('useDarkMode', () => {
-    it('Theme should be dark', () => {
-        const theme = 'dark';
-        
+describe('Testing dark mode', () => {
+    it('should be dark', () => {
+        const [theme, themeToggler] = useDarkMode();
         expect(theme).toBe('dark');
     })
     
-});
+    it('should switch between themes', () => {
+        const [theme, themeToggler] = useDarkMode();
 
+        expect(window.localStorage.getItem("theme")).toBe("dark");
+        expect(theme).toBe('dark');
 
-describe('Checking themeToggler logic', () => {
+        themeToggler();
 
-    it('Should switch between themes', () => {
-        let theme = 'dark';
-
-        // if(theme === 'dark'){
-        //     theme = 'light';
-        // }
-        // else{
-        //     theme = 'dark';
-        // }
-
-        theme === 'dark' ? theme = 'light': theme = 'dark';
-
+        expect(window.localStorage.getItem("theme")).toBe("light");
         expect(theme).toBe('light');
-
     })
-
-})
+});
 
 //THE BELOW TESTS FAIL
 
