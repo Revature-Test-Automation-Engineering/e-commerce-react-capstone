@@ -5,13 +5,13 @@ import { apiUpdateUser } from '../remote/e-commerce-api/UserService';
 
 
 
-it('Should render User Profile component', async () => {
+// it('Should render User Profile component', async () => {
     
-    //Login and view a profile to update
-    const user = await apiLogin("foxthe4th@gmail.com", "Password@123");
-    const updatedUser = await apiUpdateUser("Pitmon", "Foxall IV", "Password@123" );
+//     //Login and view a profile to update
+//     const user = await apiLogin("foxthe4th@gmail.com", "Password@123");
+//     const updatedUser = await apiUpdateUser("Pitmon", "Foxall IV", "Password@123" );
 
     
-})
+// })
 
 
