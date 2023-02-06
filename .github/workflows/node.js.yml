@@ -20,4 +20,4 @@ jobs:
           cache: npm
       - run: npm ci
       - run: CI=false npm run build
-      - run: npm test
+      - run: CI=true npm test
