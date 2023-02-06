@@ -19,5 +19,6 @@ jobs:
           node-version: 14
           cache: npm
       - run: npm ci
+      - run: unset CI
       - run: npm run build
       - run: npm test
