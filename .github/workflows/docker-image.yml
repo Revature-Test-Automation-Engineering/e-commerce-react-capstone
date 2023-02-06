@@ -26,4 +26,4 @@ jobs:
       #- name: npm install node_modules
         #run: npm install --force
       - name: npm test
-        run: CI='' npm test
+        run: npm test
